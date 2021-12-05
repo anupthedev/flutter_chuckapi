@@ -25,8 +25,8 @@ ThemeData darkTheme() {
           ),
           bodyText2: const TextStyle(
             color: Colors.white,
-            fontSize: 22,
-            fontFamily: 'Chilanka',
+            fontSize: 18,
+            fontFamily: 'SourceSansPro',
           ),
           headline1: const TextStyle(
             color: Colors.white,
@@ -83,8 +83,8 @@ ThemeData lightTheme() {
             fontFamily: 'SourceSansPro',
           ),
           bodyText2: const TextStyle(
-            fontSize: 22,
-            fontFamily: 'Chilanka',
+            fontSize: 18,
+            fontFamily: 'SourceSansPro',
           ),
           headline1: const TextStyle(
             fontSize: 25,
