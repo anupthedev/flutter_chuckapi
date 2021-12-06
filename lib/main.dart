@@ -12,8 +12,11 @@ import 'package:url_strategy/url_strategy.dart';
 
 import 'package:chuckapi/joke.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  MyTheme.isDark = (prefs.getBool('isDark') ?? false);
   runApp(const MyHomePage());
 }
 
@@ -47,15 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     futureAlbum = fetchJoke();
-    _loadStart();
     currentTheme.addListener(() {
       setState(() {});
     });
-  }
-
-  _loadStart() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    MyTheme.isDark = (prefs.getBool('isDark') ?? false);
   }
 
   @override
