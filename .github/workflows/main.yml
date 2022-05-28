@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: '11'
       - uses: subosito/flutter-action@v2
         with:
@@ -24,9 +25,8 @@ jobs:
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
+      - uses: ncipollo/release-action@v2
         with:
-          artifacts: "build/app/outputs/apk/debug/*"
+          artifacts: "build/app/outputs/flutter-apk/*"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
