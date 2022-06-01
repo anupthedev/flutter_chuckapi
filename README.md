@@ -1,6 +1,6 @@
 # chuckapi
 
-[![Build & Release](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml)
+[![Build release APKs](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml/badge.svg?branch=master&event=workflow_run)](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml)
 
 ## Getting Started
 
