@@ -1,7 +1,7 @@
 # chuckapi
 
-ChuckAPI [![Build & Release](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml)
-
+[![Build & Release](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml)
+ChuckAPI
 ## Getting Started
 
 This project is a starting point for a Flutter application.
