@@ -32,6 +32,12 @@ jobs:
       - name: Build Apk
         run: flutter build apk --split-per-abi --build-number=${GITHUB_RUN_NUMBER}
 
+      #New Added
+      - name: Get Tag Name
+        run: |
+          set -x
+          echo "VERSION_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         with:
