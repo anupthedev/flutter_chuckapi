@@ -3,12 +3,16 @@ on:
     branches:
       - main
       - master
+    tags:
+      - v*
 
   push:
     branches:
       - main
       - master
       - develop
+    tags:
+      - v*
 
 name: "Build release APKs"
 jobs:
