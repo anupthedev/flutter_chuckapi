@@ -3,16 +3,18 @@ on:
     branches:
       - main
       - master
+
   push:
     branches:
       - main
       - master
       - develop
+
 name: "Build release APKs"
 jobs:
   build:
     name: Build release APKs
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v1
@@ -25,23 +27,6 @@ jobs:
       - run: flutter test
       - name: Build Apk
         run: flutter build apk --split-per-abi --build-number=${GITHUB_RUN_NUMBER}
-
-      # - name: Sign APK
-      #   uses: r0adkll/sign-android-release@v1
-      #   with:
-      #     releaseDirectory: build/app/outputs/apk/release
-      #     signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-      #     alias: ${{ secrets.ALIAS }}
-      #     keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      #     keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      # - uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: "build/app/outputs/apk/release/*"
-      #     tag: v1.0.${{ github.run_number }}
-      #     token: ${{ secrets.TOKEN }}
-
-
 
       - name: Get tag name
         run: |
@@ -60,19 +45,19 @@ jobs:
         run: |
           set -e
 
-          mv build/app/outputs/flutter-apk/app.apk tachiyomi-${{ env.VERSION_TAG }}.apk
+          mv build/app/outputs/flutter-apk/app-release.apk chuck-api-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum chuck-api-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-arm64-v8a-release-unsigned-signed.apk chuck-api-arm64-v8a-${{ env.VERSION_TAG }}.apk
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk chuck-api-arm64-v8a-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum chuck-api-arm64-v8a-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_ARM64_V8A_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release-unsigned-aligned.apk chuck-api-armeabi-v7a-${{ env.VERSION_TAG }}.apk
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk chuck-api-armeabi-v7a-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum chuck-api-armeabi-v7a-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_ARMEABI_V7A_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-x86_64-release-unsigned.apk chuck-api-x86-${{ env.VERSION_TAG }}.apk
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk chuck-api-x86-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum chuck-api-x86-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_X86_SHA=$sha" >> $GITHUB_ENV
 
@@ -101,6 +86,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
 
-          # mv build/app/outputs/apk/release/app-universal-release-unsigned-signed.apk chuck-api-${{ env.VERSION_TAG }}.apk
-          # sha=`sha256sum chuck-api-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
-          # echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
+      # - name: Sign APK
+      #   uses: r0adkll/sign-android-release@v1
+      #   with:
+      #     releaseDirectory: build/app/outputs/apk/release
+      #     signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+      #     alias: ${{ secrets.ALIAS }}
+      #     keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+      #     keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      # - uses: ncipollo/release-action@v1
+      #   with:
+      #     artifacts: "build/app/outputs/apk/release/*"
+      #     tag: v1.0.${{ github.run_number }}
+      #     token: ${{ secrets.TOKEN }}
