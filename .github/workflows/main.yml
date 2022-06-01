@@ -37,23 +37,31 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Get Apk Info
+        id: apk-info
+        uses: hkusu/apk-info-action@v1
+        with:
+          apk-path: build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk
+      - name: Show apk info
+        run: echo "APK_VERSION=${{ steps.apk-info.outputs.version-name }}" >> $GITHUB_ENV
+
       - name: Clean up build artifacts
         run: |
           set -e
-          mv build/app/outputs/flutter-apk/app-signed.apk app-signed.apk
-          sha=`sha256sum app-signed.apk | awk '{ print $1 }'`
+          mv build/app/outputs/flutter-apk/app-signed.apk app-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+          sha=`sha256sum app-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk app-arm64-v8a-release-signed.apk
-          sha=`sha256sum app-arm64-v8a-release-signed.apk | awk '{ print $1 }'`
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk app-arm64-v8a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+          sha=`sha256sum app-arm64-v8a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_ARM64_V8A_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release-signed.apk app-armeabi-v7a-release-signed.apk
-          sha=`sha256sum app-armeabi-v7a-release-signed.apk | awk '{ print $1 }'`
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release-signed.apk app-armeabi-v7a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+          sha=`sha256sum app-armeabi-v7a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_ARMEABI_V7A_SHA=$sha" >> $GITHUB_ENV
 
-          cp build/app/outputs/flutter-apk/app-x86_64-release-signed.apk app-x86_64-release-signed.apk
-          sha=`sha256sum app-x86_64-release-signed.apk | awk '{ print $1 }'`
+          cp build/app/outputs/flutter-apk/app-x86_64-release-signed.apk app-x86_64-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+          sha=`sha256sum app-x86_64-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_X86_SHA=$sha" >> $GITHUB_ENV
 
       # - name: Get apk path
@@ -62,32 +70,12 @@ jobs:
       #     path=$(find **/build/outputs/apk -name '*.apk' -type f | head -1)
       #     echo "::set-output name=path::$path"
 
-      - name: Get apk info
-        id: apk-info
-        uses: hkusu/apk-info-action@v1
-        with:
-          apk-path: build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk
-      - name: Show apk info
-        run: |
-          echo '${{ steps.apk-info.outputs.application-name }}'
-          echo '${{ steps.apk-info.outputs.application-id }}'
-          echo '${{ steps.apk-info.outputs.version-code }}'
-          echo '${{ steps.apk-info.outputs.version-name }}'
-          echo '${{ steps.apk-info.outputs.min-sdk-version }}'
-          echo '${{ steps.apk-info.outputs.target-sdk-version }}'
-          echo '${{ steps.apk-info.outputs.compile-sdk-version }}'
-          echo '${{ steps.apk-info.outputs.uses-permissions }}'
-          echo '${{ steps.apk-info.outputs.debuggable }}'
-          echo '${{ steps.apk-info.outputs.allow-backup }}'
-          echo '${{ steps.apk-info.outputs.supports-rtl }}'
-          echo '${{ steps.apk-info.outputs.file-size }}'
-          echo '${{ steps.apk-info.outputs.readable-file-size }}'
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: ChuckAPI v1.0.${{ github.run_number }}
+          tag_name: v${{ env.APK_VERSION }}-${{ github.run_number }}
+          name: ChuckAPI v${{ env.APK_VERSION }}-${{ github.run_number }}
           body: |
             ---
             ### Checksums
@@ -98,10 +86,10 @@ jobs:
             | armeabi-v7a | ${{ env.APK_ARMEABI_V7A_SHA }}
             | x86 | ${{ env.APK_X86_SHA }} |
           files: |
-            build/app/outputs/flutter-apk/app-signed.apk
-            build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk
-            build/app/outputs/flutter-apk/app-armeabi-v7a-release-signed.apk
-            build/app/outputs/flutter-apk/app-x86_64-release-signed.apk
+            build/app/outputs/flutter-apk/app-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+            build/app/outputs/flutter-apk/app-armeabi-v7a-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
+            build/app/outputs/flutter-apk/app-x86_64-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
           draft: false
           prerelease: false
         env:
