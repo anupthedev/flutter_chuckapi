@@ -37,7 +37,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Clean up build artifacts
+      - name: Get SHA-256 Checksums
         run: |
           set -e
           mv build/app/outputs/flutter-apk/app-signed.apk app-signed.apk
@@ -62,12 +62,13 @@ jobs:
       #     path=$(find **/build/outputs/apk -name '*.apk' -type f | head -1)
       #     echo "::set-output name=path::$path"
 
-      - name: Get apk info
+      - name: Get Apk Info
         id: apk-info
         uses: hkusu/apk-info-action@v1
         with:
           apk-path: build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk
-      - name: Show apk info
+          
+      - name: Show Apk Info
         run: echo "APK_VERSION=${{ steps.apk-info.outputs.version-name }}" >> $GITHUB_ENV
 
       - name: Create Release
@@ -80,12 +81,11 @@ jobs:
             ### Checksums
             | Variant | SHA-256 |
             | ------- | ------- |
-            | Universal | ${{ env.APK_UNIVERSAL_SHA }}
             | arm64-v8a | ${{ env.APK_ARM64_V8A_SHA }}
             | armeabi-v7a | ${{ env.APK_ARMEABI_V7A_SHA }}
             | x86 | ${{ env.APK_X86_SHA }} |
           files: |
-            build/app/outputs/flutter-apk/app-signed.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release-aligned.apk
             build/app/outputs/flutter-apk/app-arm64-v8a-release-signed.apk
             build/app/outputs/flutter-apk/app-armeabi-v7a-release-signed.apk
             build/app/outputs/flutter-apk/app-x86_64-release-signed.apk
