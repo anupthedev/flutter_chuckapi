@@ -1,11 +1,16 @@
+name: "Build release APKs"
 on:
+  pull_request:
+    branches:
+      - main
+      - master
+
   push:
     branches:
+      - main
       - master
-    tags:
-      - v*
+      - develop
 
-name: "Build release APKs"
 jobs:
   build:
     name: Build release APKs
