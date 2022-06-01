@@ -1,6 +1,12 @@
 # chuckapi
 
-[![Build release APKs](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Lone-Matrix/flutter_chuckapi/actions/workflows/main.yml)
+
+<p align="center">
+
+<a href="https://github.com/Lone-Matrix/flutter_chuckapi/releases/latest"><img src="https://img.shields.io/github/release/Lone-Matrix/flutter_chuckapi.svg?maxAge=3600&style=for-the-badge&label=download"/></a></p>
+
+
+
 
 ## About this App
 
