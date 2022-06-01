@@ -63,6 +63,7 @@ jobs:
           mv build/app/outputs/flutter-apk/app-x86_64-release-signed.apk app-x86_64-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk
           sha=`sha256sum app-x86_64-v${{ env.APK_VERSION }}-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_X86_SHA=$sha" >> $GITHUB_ENV
+          echo "ls"
 
       # - name: Get apk path
       #   id: apk-path
