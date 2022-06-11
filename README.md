@@ -13,9 +13,9 @@
 This Flutter application generates random Chuck Norris facts.
 
 This application uses the following dependencies:
-    - shared_preferences: 2.0.9  
-    - http: 0.13.4
-    - url_strategy: 0.2.0
+- shared_preferences: 2.0.9
+- http: 0.13.4
+- url_strategy: 0.2.0
     
 # DISCLAIMER
 Use of this service is limited only to **non-sensitive and publicly available
