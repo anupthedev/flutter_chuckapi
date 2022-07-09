@@ -1,9 +1,9 @@
-# chuckapi
+# ChuckAPI
 
 
 <p align="center">
 
-<a href="https://github.com/Lone-Matrix/flutter_chuckapi/releases/latest"><img src="https://img.shields.io/github/release/Lone-Matrix/flutter_chuckapi.svg?maxAge=3600&style=for-the-badge&label=download"/></a></p>
+<a href="https://github.com/anupthedev/flutter_chuckapi/releases/latest"><img src="https://img.shields.io/github/release/anupthedev/flutter_chuckapi.svg?maxAge=3600&style=for-the-badge&label=download"/></a></p>
 
 
 
